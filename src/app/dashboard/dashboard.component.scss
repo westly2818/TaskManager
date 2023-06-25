@@ -1,0 +1,241 @@
+.cards-cont {
+    height: 195px;
+    box-shadow: 10px 10px 5px #dedada;
+    background-color: white;
+    margin: 22px 8px 8px 8px;
+    border-radius: 7px;
+}
+
+.table-cont {
+
+    height: 450px;
+    /* box-shadow: 10px 10px 5px #dedada; */
+    background-color: white;
+    margin: 35px 8px 8px 8px;
+    border-radius: 7px;
+
+
+}
+
+* {
+    font-family: sans-serif;
+    /* Change your font family */
+}
+
+.content-table {
+    border-collapse: collapse;
+    margin: 0 6px;
+    font-size: 0.9em;
+    width: 99%;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.content-table thead tr {
+    // background-color: #5792ff;
+    background-color: #7690ff;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.content-table th,
+.content-table td {
+    padding: 12px 15px;
+}
+
+.content-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.content-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.content-table tbody tr:last-of-type {
+    border-bottom: 2px solid #ffffff;
+}
+
+.content-table tbody tr.active-row {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+.mat-dialog-container {
+    z-index: 1000;
+    /* Adjust the z-index value as needed */
+}
+
+.mat-select-panel {
+    z-index: 2000;
+    /* Adjust the z-index value as needed */
+}
+
+.card {
+    // width: 190px;
+    // height: 100px;
+    border-radius: 7px;
+    border: 0;
+    box-shadow: 20px 20px 60px #bebebe,
+        -20px -20px 60px #ffffff;
+}
+
+.kpiCards {
+    margin: 3px 6px;
+    padding: 22px;
+    border: 1px solid #ddd;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+}
+
+.example-container mat-form-field+mat-form-field {
+    margin-left: 8px;
+}
+
+.title {
+    font-size: 27px;
+    border-top-left-radius: 7px;
+    padding: 8px 21px;
+    border-top-right-radius: 7px;
+    font-family: sans-serif;
+    font-weight: 600;
+    background: white;
+    color: #69707e;
+}
+
+.value {
+    padding: 8px 21px;
+    background: #7690ff;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    font-family: sans-serif;
+    font-weight: 600;
+    font-size: 27px;
+    display: flex;
+    justify-content: center;
+    color: white;
+
+}
+
+.button {
+    --width: 100px;
+    --height: 35px;
+    --tooltip-height: 35px;
+    --tooltip-width: 90px;
+    --gap-between-tooltip-to-button: 18px;
+    --button-color: #1163ff;
+    --tooltip-color: #fff;
+    width: var(--width);
+    height: var(--height);
+    background: var(--button-color);
+    position: relative;
+    text-align: center;
+    border-radius: 0.45em;
+    font-family: "Arial";
+    transition: background 0.3s;
+}
+
+.button::before {
+    position: absolute;
+    content: attr(data-tooltip);
+    width: var(--tooltip-width);
+    height: var(--tooltip-height);
+    background-color: var(--tooltip-color);
+    font-size: 0.9rem;
+    color: #111;
+    border-radius: .25em;
+    line-height: var(--tooltip-height);
+    bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) + 10px);
+    left: calc(50% - var(--tooltip-width) / 2);
+}
+
+.button::after {
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top-color: var(--tooltip-color);
+    left: calc(50% - 10px);
+    bottom: calc(100% + var(--gap-between-tooltip-to-button) - 10px);
+}
+
+.button::after,
+.button::before {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s;
+}
+
+.text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-wrapper,
+.text,
+.icon {
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    color: #fff;
+}
+
+.text {
+    top: 0
+}
+
+.text,
+.icon {
+    transition: top 0.5s;
+}
+
+.icon {
+    color: #fff;
+    top: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.button:hover {
+    background: #6c18ff;
+}
+
+.button:hover .text {
+    top: -100%;
+}
+
+.button:hover .icon {
+    top: 0;
+}
+
+.button:hover:before,
+.button:hover:after {
+    opacity: 1;
+    visibility: visible;
+}
+
+.button:hover:after {
+    bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) - 20px);
+}
+
+.button:hover:before {
+    bottom: calc(var(--height) + var(--gap-between-tooltip-to-button));
+}
