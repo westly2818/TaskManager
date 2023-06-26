@@ -109,6 +109,7 @@
     font-weight: 600;
     background: white;
     color: #69707e;
+    text-align: center;
 }
 
 .value {
@@ -238,4 +239,7 @@
 
 .button:hover:before {
     bottom: calc(var(--height) + var(--gap-between-tooltip-to-button));
+}
+::ng-deep .mat-select-panel {
+    margin-top: 20%;
 }

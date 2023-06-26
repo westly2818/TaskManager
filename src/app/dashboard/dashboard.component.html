@@ -55,10 +55,18 @@
                 <div style="display: flex;justify-content: end;">
 
                     <div style="margin: 17px 7px;">
-                        <button class="btn btn-primary">Add Task</button>
+                        <button class="btn btn-primary" (click)="open(content)">Add Task</button>
                     </div>
-                    <div style="margin: 17px 7px;">
-                        <button class="btn btn-primary">Update Task</button>
+                    <div class="dropdown" style="margin: 17px 7px;">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            Update Status
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Completed</a>
+                            <a class="dropdown-item" href="#">Pending</a>
+                            <a class="dropdown-item" href="#">Hold It</a>
+                        </div>
                     </div>
                     <div class="button" data-tooltip="Report" style="margin: 17px 7px;">
                         <div class="button-wrapper">
@@ -74,6 +82,7 @@
                             </span>
                         </div>
                     </div>
+
                 </div>
 
 
@@ -148,17 +157,77 @@
         </div>
     </div>
 </div>
-<!-- <ng-template #content let-modal>
+<ng-template #content let-modal>
     <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Task Update</h4>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
-    <div class="modal-body" style="height: 300px;">
-
-    
-
+    <div class="modal-body " style="height: 300px;padding: 30px;">
+        <div class="row" style="margin: 0px 0px 24px;">
+            <div class="col col-md-4">
+                <mat-form-field>
+                    <mat-label>Select Product</mat-label>
+                    <mat-select>
+                        <ng-container *ngFor="let item of prods">
+                            <mat-option [value]="item">
+                                {{item}}
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col col-md-4">
+                <mat-form-field>
+                    <mat-select placeholder="Project Code">
+                        <mat-form-field class="example-full-width">
+                            <input matInput (ngModelChange)="onInputChange($event)" value="Sushi" #itemName>
+                        </mat-form-field>
+                        <button mat-button>
+                            Submit</button>
+                        <mat-option *ngFor="let food of foods" [value]="food">
+                            {{ food }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col col-md-4">
+                <mat-form-field>
+                    <mat-label>Task Type</mat-label>
+                    <mat-select>
+                        <ng-container *ngFor="let item of devType">
+                            <mat-option [value]="item">
+                                {{item}}
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row" style="margin: 0px 0px 24px;">
+            <div class="col col-md-4">
+                <mat-form-field>
+                    <mat-select placeholder="Assigned By">
+                        <mat-form-field class="example-full-width">
+                            <input matInput value="Sushi" #itemName>
+                        </mat-form-field>
+                        <button mat-button>
+                            Submit</button>
+                        <mat-option *ngFor="let food of leads" [value]="food">
+                            {{ food }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col col-md-4">
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
     </div>
     <div class="modal-footer">
 
     </div>
-</ng-template> -->
+</ng-template>

@@ -8,10 +8,16 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from 'src/environments/environment';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-// import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +30,14 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     AngularFireAuthModule,
     AngularFirestoreModule,
     BrowserAnimationsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatSelectModule,
+    FormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+
+    // DropdownModule
     //  NgbDatepickerModule, NgbModal
   ],
   providers: [],
