@@ -9,17 +9,38 @@ import { FirebaseService } from 'src/services/firebase.service'
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+
+  nameOFemployee: any = 'Westly David'
+  employeeteam: any = 'Product Development'
   myForm: any = []
   prods: any = ['TrustAi', 'PredictAi', 'ConserveAi']
   totaldata = [
-    'wesy', 'vishnu', 'vibush', 'maha'
+    'BLPHULDD99000', 'BLPVECV74939', 'BLPDDCR472900'
   ];
-  foods = [
-    'wesy', 'vishnu', 'vibush', 'maha'
-  ];
+  ProjectCodes = [
+    'BLPHULDD99000', 'BLPVECV74939', , 'BLPDDCR472900'];
   devType: any = ['Bug Fixing', 'Development', 'Internal Requirement']
   leads: any = ['sam', 'venkatesh']
   filterdData: any = []
+
+  obj = {
+    'name': 'wesy',
+    'employeeCode': 'BLPCE224',
+    'team': 'Product Development',
+    'branch': 'TrustAi',
+    'organization': 'BLP',
+    'product': '',
+    'projectCode': '',
+    'taskType': '',
+    'status': '',
+    'assignedBy': '',
+    'description': '',
+    'position': 'employee',
+    'startTime': '',
+    'timeline': '',
+    'endTime': ''
+  }
+  taskFormObj: any = { 'product': '', 'projectCode': '', 'task_type': '', 'assignedBy': '', 'timeline': '' }
   constructor(private FirebaseService: FirebaseService, private modalService: NgbModal,) { }
 
   ngOnInit(): void {
@@ -27,11 +48,7 @@ export class DashboardComponent implements OnInit {
 
 
   }
-  // add (newValue: string): void {
-  //   newValue = newValue.trim();
-  //   if(!newValue) {return;}
-  //   this.foods.push({value: '','viewValue':newValue});
-  // }
+
   getdoc() {
     let params = {
       category: '',
@@ -42,6 +59,10 @@ export class DashboardComponent implements OnInit {
       console.log(res);
 
     })
+  }
+  assignData(data: any, from: any) {
+    console.log(data);
+
   }
   open(content: any) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' }).result.then(
@@ -54,10 +75,10 @@ export class DashboardComponent implements OnInit {
       return ele.startsWith(changes)
     })
     if (filter.length > 0) {
-      this.foods = filter
+      this.ProjectCodes = filter
     }
     else {
-      this.foods = this.totaldata
+      this.ProjectCodes = this.totaldata
     }
 
   }

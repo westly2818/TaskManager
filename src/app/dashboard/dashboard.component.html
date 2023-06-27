@@ -169,7 +169,7 @@
                     <mat-label>Select Product</mat-label>
                     <mat-select>
                         <ng-container *ngFor="let item of prods">
-                            <mat-option [value]="item">
+                            <mat-option (click)="assignData(item,'prod')" [value]="item">
                                 {{item}}
                             </mat-option>
                         </ng-container>
@@ -184,8 +184,8 @@
                         </mat-form-field>
                         <button mat-button>
                             Submit</button>
-                        <mat-option *ngFor="let food of foods" [value]="food">
-                            {{ food }}
+                        <mat-option *ngFor="let code of ProjectCodes" (click)="assignData(code,'prod')" [value]="code">
+                            {{ code }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
