@@ -63,9 +63,9 @@
                             Update Status
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Completed</a>
-                            <a class="dropdown-item" href="#">Pending</a>
-                            <a class="dropdown-item" href="#">Hold It</a>
+                            <ng-container *ngFor="let status of statusData">
+                                <a class="dropdown-item" href="#" (click)="updateStatus(status)">{{status}}</a>
+                            </ng-container>
                         </div>
                     </div>
                     <div class="button" data-tooltip="Report" style="margin: 17px 7px;">
@@ -163,13 +163,14 @@
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body " style="height: 300px;padding: 30px;">
+        <form [formGroup]="myForm">
         <div class="row" style="margin: 0px 0px 24px;">
             <div class="col col-md-4">
                 <mat-form-field>
                     <mat-label>Select Product</mat-label>
-                    <mat-select>
+                    <mat-select formControlName="product">
                         <ng-container *ngFor="let item of prods">
-                            <mat-option (click)="assignData(item,'prod')" [value]="item">
+                            <mat-option [value]="item">
                                 {{item}}
                             </mat-option>
                         </ng-container>
@@ -178,13 +179,13 @@
             </div>
             <div class="col col-md-4">
                 <mat-form-field>
-                    <mat-select placeholder="Project Code">
+                    <mat-select placeholder="Project Code" formControlName="code">
                         <mat-form-field class="example-full-width">
-                            <input matInput (ngModelChange)="onInputChange($event)" value="Sushi" #itemName>
+                            <input matInput (ngModelChange)="onInputChange($event)" placeholder="Your Input" #itemName style="height: 1px;">
                         </mat-form-field>
                         <button mat-button>
                             Submit</button>
-                        <mat-option *ngFor="let code of ProjectCodes" (click)="assignData(code,'prod')" [value]="code">
+                        <mat-option *ngFor="let code of ProjectCodes" [value]="code">
                             {{ code }}
                         </mat-option>
                     </mat-select>
@@ -193,7 +194,7 @@
             <div class="col col-md-4">
                 <mat-form-field>
                     <mat-label>Task Type</mat-label>
-                    <mat-select>
+                    <mat-select formControlName="type">
                         <ng-container *ngFor="let item of devType">
                             <mat-option [value]="item">
                                 {{item}}
@@ -206,26 +207,35 @@
         <div class="row" style="margin: 0px 0px 24px;">
             <div class="col col-md-4">
                 <mat-form-field>
-                    <mat-select placeholder="Assigned By">
+                    <mat-select placeholder="Assigned By" formControlName="assignedBy">
                         <mat-form-field class="example-full-width">
-                            <input matInput value="Sushi" #itemName>
+                            <input matInput #itemName>
                         </mat-form-field>
                         <button mat-button>
                             Submit</button>
-                        <mat-option *ngFor="let food of leads" [value]="food">
-                            {{ food }}
+                        <mat-option *ngFor="let data of leads" [value]="data">
+                            {{ data }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
+            <div class="col col-md-4 datepicker">
+                <!-- <input type="text" name="daterange" ngxDaterangepickerMd /> -->
+                <input formControlName="timeline" type="text" ngxDaterangepickerMd [(ngModel)]="selected" [singleDatePicker]="true"
+                    [timePicker]="true" [timePicker24Hour]="true" [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY HH:mm'}"
+                    placeholder="Add Timeline" class="form-control border border-primary" />
+            </div>
             <div class="col col-md-4">
-                <mat-form-field>
-                    <input matInput [matDatepicker]="picker" placeholder="Choose a date">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Description</mat-label>
+                    <input matInput placeholder="" formControlName="description" type="text">
                 </mat-form-field>
             </div>
         </div>
+        <div>
+            <button class="btn btn-primary" (click)="assignData(myForm)">Submit</button>
+        </div>
+        </form>
     </div>
     <div class="modal-footer">
 

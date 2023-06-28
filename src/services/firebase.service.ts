@@ -42,4 +42,14 @@ export class FirebaseService {
 
 
   }
+  insertData(params: any) {
+    if (params.collectionName && params.doc && params.data) {
+      return this.db.collection(params.collectionName).doc(params.doc).set(params.data, { merge: true })
+    }
+    else {
+      return this.db.collection(params.collectionName).doc().set(params.data)
+
+    }
+
+  }
 }

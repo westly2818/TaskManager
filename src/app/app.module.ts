@@ -14,10 +14,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { FormsModule } from '@angular/forms';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +35,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSelectModule,
     FormsModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    NgxDaterangepickerMd.forRoot(),
+    ReactiveFormsModule
 
     // DropdownModule
     //  NgbDatepickerModule, NgbModal

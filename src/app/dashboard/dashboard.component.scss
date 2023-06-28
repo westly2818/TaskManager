@@ -243,3 +243,15 @@
 ::ng-deep .mat-select-panel {
     margin-top: 20%;
 }
+::ng-deep.md-drppicker {
+    left: -256px !important;
+}
+
+.form-control {
+    margin: 8px 4px;
+    width: 81%;
+}
+
+::ng-deep.mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    // height: 1px;
+}
