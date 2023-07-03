@@ -257,3 +257,34 @@
 ::ng-deep.mat-form-field-appearance-legacy .mat-form-field-wrapper {
     // height: 1px;
 }
+
+.userCard {
+    width: 190px;
+    height: 254px;
+    border-radius: 30px;
+    background: #e0e0e0;
+    box-shadow: 15px 15px 30px #bebebe,
+        -15px -15px 30px #ffffff;
+}
+
+.fontvalue {
+    color: white;
+    font-size: 13px;
+    // font-weight: 600;
+}
+
+.fontTitle {
+    color: rgb(3, 3, 3);
+    font-size: 13px;
+    // font-weight: 600;
+}
+
+.users {
+    padding: 125px 0px;
+    padding-bottom: 46px;
+}
+
+.nav {
+    text-align: center;
+    border-bottom: 1px solid
+}

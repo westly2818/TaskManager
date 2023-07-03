@@ -19,10 +19,12 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { LoginComponent } from './login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent
+    DashboardComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

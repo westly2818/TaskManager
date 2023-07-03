@@ -2,10 +2,28 @@
     <div class="row" style="height:99vh;margin: 0;">
 
 
-        <div class="col-md-2 p-0"
-            style="height: 100vh;
-                                                                                                                                background: #7690ff;">
-            left
+        <div class="col-md-2 p-0" style="height: 100vh;background: #7690ff;">
+            <div class="users">
+
+                <div>
+                    profile
+                </div>
+                <div>
+                    <span class="fontTitle">Name:</span> <span class="fontvalue"> Westly David F</span>
+                </div>
+                <div>
+                    <span class="fontTitle">Email:</span> <span class="fontvalue"> westly2818@gmail.com</span>
+                </div>
+                <div>
+                    <span class="fontTitle">Employee Code:</span> <span class="fontvalue">BLPCE224</span>
+                </div>
+            </div>
+            <div>
+                <div class="nav center">
+                    Dashboard
+                </div>
+            </div>
+
         </div>
         <div class="col-md-10 p-0">
             <div class="db-cont">
@@ -27,14 +45,14 @@
                 <div style="display: flex;justify-content: end;">
 
                     <div style="margin: 17px 7px;">
-                        <button class="btn btn-primary" matTooltip="Info about the action" [disabled]="this.disableAdd"
+                        <button class="btn btn-primary" matTooltip="Add a new task" [disabled]="this.disableAdd"
                             (click)="open(content)">Add
                             Task</button>
                     </div>
                     <div class="dropdown" style="margin: 17px 7px;">
-                        <button class="btn btn-primary dropdown-toggle" type="button" matTooltip="Info about the action"
-                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                            [disabled]="
+                        <button class="btn btn-primary dropdown-toggle" type="button"
+                            matTooltip="Update your task status" id="dropdownMenuButton" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false" [disabled]="
                             this.disableUpdate">
                             Update Status
                         </button>
@@ -131,7 +149,7 @@
                         <mat-select placeholder="Project Code" formControlName="code">
                             <mat-form-field class="example-full-width">
                                 <input matInput (ngModelChange)="onInputChange($event)" placeholder="Your Input"
-                                    #itemName style="height: 1px;">
+                                    #itemName>
                             </mat-form-field>
                             <button mat-button>
                                 Submit</button>

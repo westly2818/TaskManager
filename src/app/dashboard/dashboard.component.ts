@@ -99,13 +99,14 @@ export class DashboardComponent implements OnInit {
     let params = {
       category: '',
       collectionName: this.HistorycollectionName,
-      conditions: []
+      conditions: [],
+      orderBy: 'startTime'
     }
     this.FirebaseService.getData(params).subscribe((res: any) => {
       res.forEach((data: any) => {
         let myObj = data.data()
 
-
+        // myObj['orderTime'] = moment(myObj.startTime.seconds * 1000).toDate()
         myObj.startTime = moment(myObj.startTime.seconds * 1000).format('DD-MM-YYYY HH:mm')
         myObj.endTime = moment(myObj.endTime.seconds * 1000).format('DD-MM-YYYY HH:mm')
 
@@ -113,7 +114,7 @@ export class DashboardComponent implements OnInit {
 
         this.tableData.push(myObj)
       })
-      this.tableData = _.orderBy(this.tableData, ['startTime'], ['desc'])
+      // this.tableData = _.orderBy(this.tableData, ['orderTime'], ['desc'])
       let totalTask = this.tableData.filter((ele: any) => {
         return ele.status == 'In Progress'
       })
