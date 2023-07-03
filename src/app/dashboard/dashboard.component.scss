@@ -101,7 +101,7 @@
 }
 
 .title {
-    font-size: 27px;
+    font-size: 24px;
     border-top-left-radius: 7px;
     padding: 8px 21px;
     border-top-right-radius: 7px;
@@ -240,9 +240,11 @@
 .button:hover:before {
     bottom: calc(var(--height) + var(--gap-between-tooltip-to-button));
 }
+
 ::ng-deep .mat-select-panel {
     margin-top: 20%;
 }
+
 ::ng-deep.md-drppicker {
     left: -256px !important;
 }

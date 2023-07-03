@@ -1,5 +1,5 @@
 <div class="main-cont" style="background: whitesmoke;">
-    <div class="row" style="height:99vh;width: 100%;margin: 0;">
+    <div class="row" style="height:99vh;margin: 0;">
 
 
         <div class="col-md-2 p-0"
@@ -10,56 +10,32 @@
         <div class="col-md-10 p-0">
             <div class="db-cont">
                 <div class="row kpiCards">
-                    <div class="col col-md-3 center">
-                        <div class="card">
+                    <ng-container *ngFor="let item of cardData">
+                        <div class="col col-md-3 center">
+                            <div class="card">
 
-                            <div class="title">
-                                Total Task
-                            </div>
-                            <div class="value">
-                                55
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col col-md-3 center">
-                        <div class="card">
-                            <div class="title">
-                                Total Completed
-                            </div>
-                            <div class="value" style="background-color: rgb(76, 230, 89);">
-                                12
+                                <div class="title">
+                                    {{item.title}}
+                                </div>
+                                <div class="value">
+                                    {{item.value}}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col col-md-3 center">
-                        <div class="card">
-                            <div class="title">
-                                Task OnHold
-                            </div>
-                            <div class="value" style="background-color: rgb(216, 218, 72);">
-                                12
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col col-md-3 center">
-                        <div class="card">
-                            <div class="title">
-                                Pending Task
-                            </div>
-                            <div class="value" style="background-color: rgb(221, 87, 87);">
-                                5
-                            </div>
-                        </div>
-                    </div>
+                    </ng-container>
                 </div>
                 <div style="display: flex;justify-content: end;">
 
                     <div style="margin: 17px 7px;">
-                        <button class="btn btn-primary" (click)="open(content)">Add Task</button>
+                        <button class="btn btn-primary" matTooltip="Info about the action" [disabled]="this.disableAdd"
+                            (click)="open(content)">Add
+                            Task</button>
                     </div>
                     <div class="dropdown" style="margin: 17px 7px;">
-                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
+                        <button class="btn btn-primary dropdown-toggle" type="button" matTooltip="Info about the action"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            [disabled]="
+                            this.disableUpdate">
                             Update Status
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -90,7 +66,6 @@
                     <table class="content-table">
                         <thead>
                             <tr>
-                                <th>Date</th>
                                 <th>Name</th>
                                 <th>Project Code</th>
                                 <th>Product</th>
@@ -98,54 +73,28 @@
                                 <th>Task Type</th>
                                 <th>Task Description</th>
                                 <th>Status</th>
+                                <th>Start Time</th>
+                                <th>Timeline</th>
+                                <th>End Time</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>14-06-2023</td>
-                                <td>Westly David F</td>
-                                <td>BLPHULDDCC009</td>
-                                <td>TrustAi</td>
-                                <td>Sam</td>
-                                <td>Development</td>
-                                <td>new screen for internal purpose,
-                                    new screen for internal purpose
-                                    new screen for internal purposenew screen for internal purposenew screen for
-                                    internal purpose
-                                </td>
-                                <td>Workin on</td>
+                            <ng-container *ngFor="let data of tableData">
+                                <tr>
+                                    <td>{{data.name}}</td>
+                                    <td>{{data.projectCode}}</td>
+                                    <td>{{data.product}}</td>
+                                    <td>{{data.assignedBy}}</td>
+                                    <td>{{data.taskType}}</td>
+                                    <td>{{data.description}} </td>
+                                    <td>{{data.status}}</td>
+                                    <td>{{data.startTime}}</td>
+                                    <td>{{data.timeline}}</td>
+                                    <td>{{data.endTime}}</td>
 
-                            </tr>
-                            <tr>
-                                <td>14-06-2023</td>
-                                <td>Westly David F</td>
-                                <td>BLPHULDDCC009</td>
-                                <td>TrustAi</td>
-                                <td>Sam</td>
-                                <td>Development</td>
-                                <td>new screen for internal purpose,
-                                    new screen for internal purpose
-                                    new screen for internal purposenew screen for internal purposenew screen for
-                                    internal purpose
-                                </td>
-                                <td>Workin on</td>
+                                </tr>
+                            </ng-container>
 
-                            </tr>
-                            <tr>
-                                <td>14-06-2023</td>
-                                <td>Westly David F</td>
-                                <td>BLPHULDDCC009</td>
-                                <td>TrustAi</td>
-                                <td>Sam</td>
-                                <td>Development</td>
-                                <td>new screen for internal purpose,
-                                    new screen for internal purpose
-                                    new screen for internal purposenew screen for internal purposenew screen for
-                                    internal purpose
-                                </td>
-                                <td>Workin on</td>
-
-                            </tr>
 
 
                         </tbody>
@@ -164,77 +113,79 @@
     </div>
     <div class="modal-body " style="height: 300px;padding: 30px;">
         <form [formGroup]="myForm">
-        <div class="row" style="margin: 0px 0px 24px;">
-            <div class="col col-md-4">
-                <mat-form-field>
-                    <mat-label>Select Product</mat-label>
-                    <mat-select formControlName="product">
-                        <ng-container *ngFor="let item of prods">
-                            <mat-option [value]="item">
-                                {{item}}
+            <div class="row" style="margin: 0px 0px 24px;">
+                <div class="col col-md-4">
+                    <mat-form-field>
+                        <mat-label>Select Product</mat-label>
+                        <mat-select formControlName="product">
+                            <ng-container *ngFor="let item of prods">
+                                <mat-option [value]="item">
+                                    {{item}}
+                                </mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col col-md-4">
+                    <mat-form-field>
+                        <mat-select placeholder="Project Code" formControlName="code">
+                            <mat-form-field class="example-full-width">
+                                <input matInput (ngModelChange)="onInputChange($event)" placeholder="Your Input"
+                                    #itemName style="height: 1px;">
+                            </mat-form-field>
+                            <button mat-button>
+                                Submit</button>
+                            <mat-option *ngFor="let code of ProjectCodes" [value]="code">
+                                {{ code }}
                             </mat-option>
-                        </ng-container>
-                    </mat-select>
-                </mat-form-field>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col col-md-4">
+                    <mat-form-field>
+                        <mat-label>Task Type</mat-label>
+                        <mat-select formControlName="type">
+                            <ng-container *ngFor="let item of devType">
+                                <mat-option [value]="item">
+                                    {{item}}
+                                </mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
             </div>
-            <div class="col col-md-4">
-                <mat-form-field>
-                    <mat-select placeholder="Project Code" formControlName="code">
-                        <mat-form-field class="example-full-width">
-                            <input matInput (ngModelChange)="onInputChange($event)" placeholder="Your Input" #itemName style="height: 1px;">
-                        </mat-form-field>
-                        <button mat-button>
-                            Submit</button>
-                        <mat-option *ngFor="let code of ProjectCodes" [value]="code">
-                            {{ code }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col col-md-4">
-                <mat-form-field>
-                    <mat-label>Task Type</mat-label>
-                    <mat-select formControlName="type">
-                        <ng-container *ngFor="let item of devType">
-                            <mat-option [value]="item">
-                                {{item}}
+            <div class="row" style="margin: 0px 0px 24px;">
+                <div class="col col-md-4">
+                    <mat-form-field>
+                        <mat-select placeholder="Assigned By" formControlName="assignedBy">
+                            <mat-form-field class="example-full-width">
+                                <input matInput #itemName>
+                            </mat-form-field>
+                            <button mat-button>
+                                Submit</button>
+                            <mat-option *ngFor="let data of leads" [value]="data">
+                                {{ data }}
                             </mat-option>
-                        </ng-container>
-                    </mat-select>
-                </mat-form-field>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col col-md-4 datepicker">
+                    <!-- <input type="text" name="daterange" ngxDaterangepickerMd /> -->
+                    <input formControlName="timeline" type="text" ngxDaterangepickerMd [(ngModel)]="selected"
+                        [singleDatePicker]="true" [timePicker]="true" [timePicker24Hour]="true"
+                        [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY HH:mm'}" placeholder="Add Timeline"
+                        [maxDate]="maxDate" class="form-control border border-primary" />
+                </div>
+                <div class="col col-md-4">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Description</mat-label>
+                        <input matInput placeholder="" formControlName="description" type="text">
+                    </mat-form-field>
+                </div>
             </div>
-        </div>
-        <div class="row" style="margin: 0px 0px 24px;">
-            <div class="col col-md-4">
-                <mat-form-field>
-                    <mat-select placeholder="Assigned By" formControlName="assignedBy">
-                        <mat-form-field class="example-full-width">
-                            <input matInput #itemName>
-                        </mat-form-field>
-                        <button mat-button>
-                            Submit</button>
-                        <mat-option *ngFor="let data of leads" [value]="data">
-                            {{ data }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+            <div>
+                <button class="btn btn-primary" [disabled]=" !myForm.valid" (click)="assignData(myForm)">Submit</button>
             </div>
-            <div class="col col-md-4 datepicker">
-                <!-- <input type="text" name="daterange" ngxDaterangepickerMd /> -->
-                <input formControlName="timeline" type="text" ngxDaterangepickerMd [(ngModel)]="selected" [singleDatePicker]="true"
-                    [timePicker]="true" [timePicker24Hour]="true" [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY HH:mm'}"
-                    placeholder="Add Timeline" class="form-control border border-primary" />
-            </div>
-            <div class="col col-md-4">
-                <mat-form-field class="example-full-width">
-                    <mat-label>Description</mat-label>
-                    <input matInput placeholder="" formControlName="description" type="text">
-                </mat-form-field>
-            </div>
-        </div>
-        <div>
-            <button class="btn btn-primary" (click)="assignData(myForm)">Submit</button>
-        </div>
         </form>
     </div>
     <div class="modal-footer">
