@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
+  activeTab: any = 'login'
   constructor() { }
 
   ngOnInit(): void {
+  }
+  changeTab(tab: any) {
+    this.activeTab = tab
   }
 
 }

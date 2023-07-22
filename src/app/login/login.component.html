@@ -1,1 +1,32 @@
-<p>login works!</p>
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+
+        <h2 [ngClass]="activeTab=='login'? 'active':'inactive underlineHover'" (click)="changeTab('login')"> Sign In
+        </h2>
+        <h2 [ngClass]="activeTab=='signup'? 'active':'inactive underlineHover'" (click)="changeTab('signup')">Sign Up
+        </h2>
+        <ng-container *ngIf="activeTab=='login'">
+            <form>
+                <input type="text" id="login" class="fadeIn second" name="login" placeholder="username">
+                <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+                <input type="submit" class="fadeIn fourth" value="Log In">
+            </form>
+
+            <!-- Remind Passowrd -->
+            <div id="formFooter">
+                <a class="underlineHover" href="#">Forgot Password?</a>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="activeTab=='signup'">
+            <form>
+                <input type="text" id="login" name="login" placeholder="full name">
+                <input type="text" id="login" name="login" placeholder="mail id">
+                <input type="text" id="password" name="login" placeholder="password">
+                <input type="text" id="password" name="login" placeholder="confirm password">
+                <input type="submit" value="Create">
+            </form>
+        </ng-container>
+
+    </div>
+</div>
