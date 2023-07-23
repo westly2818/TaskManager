@@ -7,10 +7,12 @@
         <h2 [ngClass]="activeTab=='signup'? 'active':'inactive underlineHover'" (click)="changeTab('signup')">Sign Up
         </h2>
         <ng-container *ngIf="activeTab=='login'">
-            <form>
-                <input type="text" id="login" class="fadeIn second" name="login" placeholder="username">
-                <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
-                <input type="submit" class="fadeIn fourth" value="Log In">
+            <form [formGroup]="loginform">
+                <input type="text" id="login" class="fadeIn second" formControlName="id" name="login"
+                    placeholder="username">
+                <input type="text" id="password" class="fadeIn third" formControlName="password" name="login"
+                    placeholder="password">
+                <input type="submit" class="fadeIn fourth" (click)="checkuser(loginform)" value="Log In">
             </form>
 
             <!-- Remind Passowrd -->
@@ -19,12 +21,69 @@
             </div>
         </ng-container>
         <ng-container *ngIf="activeTab=='signup'">
-            <form>
-                <input type="text" id="login" name="login" placeholder="full name">
-                <input type="text" id="login" name="login" placeholder="mail id">
-                <input type="text" id="password" name="login" placeholder="password">
-                <input type="text" id="password" name="login" placeholder="confirm password">
-                <input type="submit" value="Create">
+            <form [formGroup]="newuserForm">
+                <div class="row">
+                    <div class="col-md-6" style="padding-right: 0;padding-left: 20px;">
+                        <input type="text" id="login" name="login" formControlName="name"
+                            placeholder="Name Of Employee">
+
+                    </div>
+                    <div class="col-md-6" style="padding-right: 20px;
+                    padding-left: 0;">
+                        <input type="text" id="login" name="login" formControlName="mailid" placeholder="Employee Code">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" style="padding-right: 0;padding-left: 20px;">
+
+                        <input type="text" id="login" name="login" formControlName="mailid" placeholder="Mail Id">
+
+
+                    </div>
+                    <div class="col-md-6" style="padding-right: 20px;
+                    padding-left: 0;">
+                        <input type="text" id="login" name="login" formControlName="name" placeholder="contact">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6" style="padding-right: 0;padding-left: 20px;">
+                        <input type="text" id="password" name="login" formControlName="password" placeholder="Password">
+                    </div>
+                    <div class="col-md-6" style="padding-right: 20px;
+                    padding-left: 0;">
+                        <input type="text" id="password" name="login" placeholder="Confirm Password">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" style="padding-right: 0;padding-left: 20px;">
+                        <mat-form-field>
+                            <mat-label>Select Product</mat-label>
+                            <mat-select formControlName="team">
+                                <ng-container *ngFor="let item of teams">
+                                    <mat-option [value]="item">
+                                        {{item}}
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6" style="padding-right: 20px;
+                    padding-left: 0;">
+                        <mat-form-field>
+                            <mat-label>Select Org</mat-label>
+                            <mat-select formControlName="organization">
+                                <ng-container *ngFor="let item of org">
+                                    <mat-option [value]="item">
+                                        {{item}}
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                </div>
+                <input type="submit" value="Create" (click)="saveuser(newuserForm)">
             </form>
         </ng-container>
 
