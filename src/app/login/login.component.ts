@@ -21,6 +21,8 @@ export class LoginComponent implements OnInit {
       organization: new FormControl('', [Validators.required]),
       mailid: new FormControl('', [Validators.required]),
       name: new FormControl('', [Validators.required]),
+      contact: new FormControl('', [Validators.required]),
+      empCode: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
       confirmpassword: new FormControl('', [Validators.required]),
     });
@@ -47,6 +49,8 @@ export class LoginComponent implements OnInit {
       mailid: data.value.mailid,
       password: data.value.password,
       organization: data.value.organization,
+      contact: data.value.contact,
+      employeeCode: data.value.empCode,
       role: 'Employee'
     }
     let userparam = {
@@ -85,6 +89,11 @@ export class LoginComponent implements OnInit {
           let obj = element.data()
           if (obj.password == userobj.pass) {
             console.log('user there', obj);
+            localStorage.setItem('name', obj.name);
+            localStorage.setItem('mailid', obj.mailid);
+            localStorage.setItem('team', obj.team);
+            localStorage.setItem('employeeCode', obj.employeeCode);
+
             this.router.navigate(['/dashboard'])
           }
 

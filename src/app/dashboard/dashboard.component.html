@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     <div class="button" data-tooltip="Report" style="margin: 17px 7px;">
-                        <div class="button-wrapper">
+                        <div class="button-wrapper" (click)="downloadreport()">
                             <div class="text">Download</div>
                             <span class="icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="2em"
@@ -152,7 +152,7 @@
                                 <input matInput (ngModelChange)="onInputChange($event)" placeholder="Your Input"
                                     #itemName>
                             </mat-form-field>
-                            <button mat-button>
+                            <button formControlName="code" mat-button>
                                 Submit</button>
                             <mat-option *ngFor="let code of ProjectCodes" [value]="code">
                                 {{ code }}

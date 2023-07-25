@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { log } from 'console';
 import * as _ from "lodash"
 import { MatTooltipModule } from '@angular/material/tooltip';
+import * as ExcelJS from 'exceljs';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -13,9 +14,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 })
 export class DashboardComponent implements OnInit {
 
-  nameOFemployee: any = 'Westly David'
-  employeeteam: any = 'Product Development'
-  empCode: any = 'BLPCE224'
+  nameOFemployee: any = localStorage.getItem('name') || "";
+  employeeteam: any = localStorage.getItem('team') || "";
+  empCode: any = localStorage.getItem('employeeCode') || "";
   branch: any = 'TrustAi'
   prods: any = ['TrustAi', 'PredictAi', 'ConserveAi']
   totaldata = [
@@ -31,6 +32,7 @@ export class DashboardComponent implements OnInit {
   tableData: any = []
   obj: any = {
     'name': '',
+    'employeeCode': this.empCode,
     'team': '',
     'branch': '',
     'organization': 'BLP',
@@ -228,6 +230,87 @@ export class DashboardComponent implements OnInit {
     else {
       this.ProjectCodes = this.totaldata
     }
+
+  }
+  downloadreport() {
+    console.log(this.tableData);
+    let data = this.tableData
+    for (let ele of data) {
+      let currentDate: any = moment(ele.startTime, "DD-MM-YYYY HH:mm").toDate();
+      let startDate: any = new Date(currentDate.getFullYear(), 0, 1);
+      var days = Math.floor((currentDate - startDate) /
+        (24 * 60 * 60 * 1000));
+
+      var weekNumber = Math.ceil(days / 7);
+      ele['week'] = weekNumber
+    }
+    let groupByweek = _.groupBy(data, ele => {
+      return ele.week
+    })
+
+    const alpha = Array.from(Array(26)).map((e, i) => i + 65);
+    const alphabet = alpha.map((x) => String.fromCharCode(x));
+    console.log(alphabet);
+
+    const workbook = new ExcelJS.Workbook();
+
+    const worksheet = workbook.addWorksheet('Sheet 1');
+    let worksheetdata = []
+    let rowNum = 6
+    let ini = 0
+    let headers = ['Emp Code', 'Week', 'Name', 'Team', 'roject Code', 'Hours Spent']
+    worksheet.columns = []
+    // for (let weeks in groupByweek) {
+
+    // for (let head of headers) {
+    //   let obj: any = { header: head }
+    //   obj['key'] = 'col' + alphabet[ini]
+    //   worksheet.columns.push(obj)
+    //   ini++
+    // }
+    // }
+    worksheet.columns = [
+      { header: 'Emp Code', key: 'colA' },
+      { header: 'Week', key: 'colB' },
+      { header: 'Name', key: 'colC' },
+      { header: 'Team', key: 'colD' },
+      { header: 'Project Code', key: 'colE' },
+      { header: 'Hours Spent', key: 'colF' },
+    ];
+
+    // Add a new column after column F
+    // worksheet.columns.splice(6, 0, { header: 'G', key: 'colG' });
+
+    // Add data to the new column header
+    console.log(worksheet.columns);
+
+    // worksheet.addRow(['Emp Code', 'Week', 'Name', 'Team', 'Project Code', 'Hours Spent']);
+    // worksheet.mergeCells('A2:F2');
+    // worksheet.getCell('A2').value = 'Week 26 July 15 - 22';
+    // worksheet.addRow(['BLPCE224', 30, 'Westly David', 'Product Development', 'BLPHULCE2231', 8]);
+    // worksheet.addRow(['BLPCE224', 30, 'Westly David', 'Product Development', 'BLPHULCE2231', 8]);
+
+    // const mergedCell = worksheet.getCell('A2');
+    // mergedCell.fill = {
+    //   type: 'pattern',
+    //   pattern: 'solid',
+    //   fgColor: { argb: 'FFFF0000' }
+    // };
+    // mergedCell.alignment = {
+    //   horizontal: 'center',
+    //   vertical: 'middle'
+    // };
+
+    workbook.xlsx.writeBuffer().then((data: ArrayBuffer) => {
+      const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'my_excel_file.xlsx';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    })
+
 
   }
 }
