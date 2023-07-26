@@ -280,11 +280,36 @@
 }
 
 .users {
-    padding: 125px 0px;
-    padding-bottom: 46px;
+    padding: 47px 0px;
+    padding-bottom: 29px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .nav {
     text-align: center;
-    border-bottom: 1px solid
+    // border-bottom: 1px solid
+}
+
+.activetab {
+    display: flex;
+    justify-content: center;
+    background: #f3f3f3;
+    margin: 0px 1px;
+    padding: 6px 0px;
+    border-radius: 5px;
+}
+
+:host ::ng-deep.form-control {
+    margin: 8px 11px;
+    width: 92%;
+}
+
+.profile {
+    background: white;
+    margin: 0px 1px;
+    border-radius: 44px;
+    width: 35%;
 }

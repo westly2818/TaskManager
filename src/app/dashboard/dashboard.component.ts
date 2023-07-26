@@ -7,6 +7,8 @@ import { log } from 'console';
 import * as _ from "lodash"
 import { MatTooltipModule } from '@angular/material/tooltip';
 import * as ExcelJS from 'exceljs';
+import { report } from 'process';
+import { end } from '@popperjs/core';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -17,6 +19,7 @@ export class DashboardComponent implements OnInit {
   nameOFemployee: any = localStorage.getItem('name') || "";
   employeeteam: any = localStorage.getItem('team') || "";
   empCode: any = localStorage.getItem('employeeCode') || "";
+  empmail: any = localStorage.getItem('mailid') || "";
   branch: any = 'TrustAi'
   prods: any = ['TrustAi', 'PredictAi', 'ConserveAi']
   totaldata = [
@@ -50,11 +53,14 @@ export class DashboardComponent implements OnInit {
   maxDate: any = moment()
   taskFormObj: any = { 'product': '', 'projectCode': '', 'task_type': '', 'assignedBy': '', 'timeline': '' }
   selected: any
+  selectedDateQuery: any
   HistorycollectionName: any = ''
   LiveCollectionName: any = ''
   disableAdd: any = false
   disableUpdate: any = false
   cardData: any = [{ title: 'Total Task', value: 0 }, { title: 'Total Completed', value: 0 }, { title: 'Task OnHold', value: 0 }, { title: ' Pending Task', value: 0 },]
+  startDate: any = moment().subtract(7, 'days').toDate()
+  endDate: any = moment().toDate()
   constructor(private FirebaseService: FirebaseService, private modalService: NgbModal, public fb: FormBuilder,) {
     // this.minDate.setDate(this.minDate.getDate() - 0);
   }
@@ -76,7 +82,13 @@ export class DashboardComponent implements OnInit {
     this.getMyTasks()
 
   }
-
+  dateselected(event: any) {
+    console.log(moment(event.startDate.$d).subtract(330, 'minute').toDate());
+    console.log(moment(event.endDate.$d).subtract(330, 'minute').toDate());
+    this.startDate = moment(event.startDate.$d).subtract(330, 'minute').toDate()
+    this.endDate = moment(event.endDate.$d).subtract(330, 'minute').toDate()
+    this.getMyTasks()
+  }
   getMyTasks() {
     this.tableData = []
     let liveParam = {
@@ -101,7 +113,16 @@ export class DashboardComponent implements OnInit {
     let params = {
       category: '',
       collectionName: this.HistorycollectionName,
-      conditions: [],
+      conditions: [{
+        key: "startTime",
+        symbol: ">=",
+        value: moment(this.startDate).toDate(),
+      },
+      {
+        key: "startTime",
+        symbol: "<=",
+        value: moment(this.endDate).toDate(),
+      },],
       orderBy: 'startTime'
     }
     this.FirebaseService.getData(params).subscribe((res: any) => {
@@ -232,74 +253,126 @@ export class DashboardComponent implements OnInit {
     }
 
   }
-  downloadreport() {
-    console.log(this.tableData);
-    let data = this.tableData
-    for (let ele of data) {
+  async downloadreport() {
+    let exceldata: any = []
+    for (let ele of this.tableData) {
+      let reportObj: any = {}
+
       let currentDate: any = moment(ele.startTime, "DD-MM-YYYY HH:mm").toDate();
       let startDate: any = new Date(currentDate.getFullYear(), 0, 1);
       var days = Math.floor((currentDate - startDate) /
         (24 * 60 * 60 * 1000));
 
       var weekNumber = Math.ceil(days / 7);
-      ele['week'] = weekNumber
+      reportObj['employeeCode'] = ele.employeeCode
+      reportObj['week'] = weekNumber
+      reportObj['name'] = ele.name
+      reportObj['team'] = ele.team
+      reportObj['projectCode'] = ele.projectCode
+      reportObj['hours'] = 8
+      reportObj['total hours'] = 40
+      exceldata.push(reportObj)
     }
-    let groupByweek = _.groupBy(data, ele => {
+    let groupByweek = _.groupBy(exceldata, ele => {
       return ele.week
     })
 
     const alpha = Array.from(Array(26)).map((e, i) => i + 65);
     const alphabet = alpha.map((x) => String.fromCharCode(x));
-    console.log(alphabet);
+
 
     const workbook = new ExcelJS.Workbook();
 
     const worksheet = workbook.addWorksheet('Sheet 1');
-    let worksheetdata = []
-    let rowNum = 6
-    let ini = 0
-    let headers = ['Emp Code', 'Week', 'Name', 'Team', 'roject Code', 'Hours Spent']
+
+
+    let headers = ['Employee Code', 'Week', 'Name', 'Team', 'Project Code', 'Hours Spent', 'Total Hours']
+    let headLen = headers.length
     worksheet.columns = []
-    // for (let weeks in groupByweek) {
+    let loop = [1, 2]
+    let i = 0
 
-    // for (let head of headers) {
-    //   let obj: any = { header: head }
-    //   obj['key'] = 'col' + alphabet[ini]
-    //   worksheet.columns.push(obj)
-    //   ini++
-    // }
-    // }
-    worksheet.columns = [
-      { header: 'Emp Code', key: 'colA' },
-      { header: 'Week', key: 'colB' },
-      { header: 'Name', key: 'colC' },
-      { header: 'Team', key: 'colD' },
-      { header: 'Project Code', key: 'colE' },
-      { header: 'Hours Spent', key: 'colF' },
-    ];
+    let weekCount = 0
+    for (let weeks in groupByweek) {
 
-    // Add a new column after column F
-    // worksheet.columns.splice(6, 0, { header: 'G', key: 'colG' });
+      headers.forEach((element, index) => {
+        if (i == 1 || i == 0) {
+          worksheet.getColumn(alphabet[i]).width = 15
+        }
+        else {
+          worksheet.getColumn(alphabet[i]).width = 25
+        }
 
-    // Add data to the new column header
-    console.log(worksheet.columns);
+        let headerCell = worksheet.getCell(alphabet[i] + '1')
 
-    // worksheet.addRow(['Emp Code', 'Week', 'Name', 'Team', 'Project Code', 'Hours Spent']);
-    // worksheet.mergeCells('A2:F2');
-    // worksheet.getCell('A2').value = 'Week 26 July 15 - 22';
-    // worksheet.addRow(['BLPCE224', 30, 'Westly David', 'Product Development', 'BLPHULCE2231', 8]);
-    // worksheet.addRow(['BLPCE224', 30, 'Westly David', 'Product Development', 'BLPHULCE2231', 8]);
+        headerCell.value = element
+        headerCell.alignment = {
+          horizontal: 'center',
+          vertical: 'middle'
+        }
+        headerCell.fill = {
+          type: 'pattern',
+          pattern: 'solid',
+          fgColor: { argb: '23395d' }
+        };
+        headerCell.font = { color: { argb: 'FFFFFF' } };
+        i++
 
-    // const mergedCell = worksheet.getCell('A2');
-    // mergedCell.fill = {
-    //   type: 'pattern',
-    //   pattern: 'solid',
-    //   fgColor: { argb: 'FFFF0000' }
-    // };
-    // mergedCell.alignment = {
-    //   horizontal: 'center',
-    //   vertical: 'middle'
-    // };
+      });
+      let countAdded = false
+      groupByweek[weeks].forEach((ele: any, index: any) => {
+
+        let keyInd = index + 3
+        let dataInd = weekCount * headLen
+        // if (weekCount > 0 && countAdded == false) {
+        //     dataInd += 1
+        // }
+        for (let value in ele) {
+          console.log(alphabet[dataInd] + keyInd.toString());
+          let datacell = worksheet.getCell(alphabet[dataInd] + keyInd.toString())
+          datacell.value = ele[value]
+          datacell.alignment = {
+            horizontal: 'center',
+            vertical: 'middle'
+          }
+          dataInd++
+        }
+
+      });
+
+      let cellAlpha = weekCount * headLen
+      let totalhrLen = (groupByweek[weeks].length + 2).toString()
+
+      worksheet.mergeCells(`${alphabet[cellAlpha]}2:${alphabet[cellAlpha + headLen - 1]}2`)
+      if (totalhrLen != '1') {
+        worksheet.mergeCells(`${alphabet[cellAlpha + headLen - 1]}3:${alphabet[cellAlpha + headLen - 1]}${totalhrLen}`)
+      }
+      var mergedCell = worksheet.getCell(alphabet[cellAlpha] + '2');
+      var totalhrCell = worksheet.getCell(alphabet[cellAlpha + headLen - 1] + totalhrLen);
+      let year: any = moment().format("YYYY")
+      let week: any = weeks
+      const starD: any = new Date(year, 0, 1 + (week - 1) * 7);
+      const endD: any = moment(starD).add(6, 'days').format("DD MMMM YYYY")
+
+
+      mergedCell.value = `Week - ${weeks} ${moment(starD).format("DD MMMM")} to ${endD} `;
+      mergedCell.font = { bold: true }
+      mergedCell.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'ADD8E6' }
+      };
+      mergedCell.alignment = {
+        horizontal: 'center',
+        vertical: 'middle'
+      };
+      totalhrCell.alignment = {
+        horizontal: 'center',
+        vertical: 'middle'
+      }
+      // i++
+      weekCount++
+    }
 
     workbook.xlsx.writeBuffer().then((data: ArrayBuffer) => {
       const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });

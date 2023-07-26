@@ -4,24 +4,26 @@
 
         <div class="col-md-2 p-0" style="height: 100vh;background: #7690ff;">
             <div class="users">
-                <div>
+
+                <div class="profile">
+                    <img src="../../assets/men.png" style="height: 85px;" alt="">
                 </div>
                 <div>
-                    profile
+                    <span class="fontvalue"> {{nameOFemployee}}</span>
                 </div>
                 <div>
-                    <span class="fontTitle">Name:</span> <span class="fontvalue"> Westly David F</span>
+                    <span class="fontvalue"> {{empmail}}</span>
                 </div>
                 <div>
-                    <span class="fontTitle">Email:</span> <span class="fontvalue"> westly2818@gmail.com</span>
-                </div>
-                <div>
-                    <span class="fontTitle">Employee Code:</span> <span class="fontvalue">BLPCE224</span>
+                    <span class="fontvalue">{{empCode}}</span>
                 </div>
             </div>
             <div>
-                <div class="nav center">
+                <div class="activetab">
                     Dashboard
+                </div>
+                <div class="activetab" style="background-color: #7690ff;">
+                    Configuration
                 </div>
             </div>
 
@@ -44,7 +46,12 @@
                     </ng-container>
                 </div>
                 <div style="display: flex;justify-content: end;">
-
+                    <div style="margin: 9px 0px;">
+                        <input type="text" ngxDaterangepickerMd [(ngModel)]="selectedDateQuery" [timePicker]="true"
+                            [timePicker24Hour]="true" [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY HH:mm'}"
+                            placeholder="Select" [maxDate]="maxDate" class="form-control border border-primary"
+                            (change)="dateselected($event)" />
+                    </div>
                     <div style="margin: 17px 7px;">
                         <button class="btn btn-primary" matTooltip="Add a new task" [disabled]="this.disableAdd"
                             (click)="open(content)">Add
