@@ -318,3 +318,7 @@
     border-radius: 44px;
     width: 35%;
 }
+
+:host ::ng-deep.md-drppicker.drops-down-auto .ltr .shown .double {
+    left: 349px !important;
+}

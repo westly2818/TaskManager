@@ -89,7 +89,7 @@ export class DashboardComponent implements OnInit {
     this.endDate = moment(event.endDate.$d).subtract(330, 'minute').toDate()
     this.getMyTasks()
   }
-  getMyTasks() {
+  async getMyTasks() {
     this.tableData = []
     let liveParam = {
       category: '',
@@ -125,7 +125,7 @@ export class DashboardComponent implements OnInit {
       },],
       orderBy: 'startTime'
     }
-    this.FirebaseService.getData(params).subscribe((res: any) => {
+    await this.FirebaseService.getData(params).subscribe((res: any) => {
       res.forEach((data: any) => {
         let myObj = data.data()
 
@@ -160,7 +160,7 @@ export class DashboardComponent implements OnInit {
 
     })
   }
-  assignData(data: any) {
+  async assignData(data: any) {
     this.modalService.dismissAll()
     let date = moment(data.value.timeline.startDate.$d).subtract(330, 'minute').toDate()
     this.obj.branch = this.branch
@@ -188,10 +188,10 @@ export class DashboardComponent implements OnInit {
       console.log('done insertion history');
 
     })
-    this.FirebaseService.insertData(updateLive).then((res: any) => {
+    this.FirebaseService.insertData(updateLive).then(async (res: any) => {
       console.log('done updated live');
 
-      this.getMyTasks()
+      await this.getMyTasks()
 
     })
 
